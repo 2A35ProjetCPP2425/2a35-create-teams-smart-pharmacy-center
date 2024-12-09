@@ -11,7 +11,7 @@ private:
     int id_personnel;
     float salaire;
     QString nom;
-    QString prenom,email,poste,mdp,sexe;
+    QString prenom,email,poste,mdp,sexe,id_emp,raison_conge,raison;
 
 
 public:
@@ -19,9 +19,19 @@ public:
     Personel(int,float,QString,QString,QString,QString,QString,QString,QDate);
     int generateIdentifiant();
     QString generateNumericPassword();
-    QDate dateembauche;
+    QDate dateembauche, date_d ,date_f ,type_conge;
     bool idExists(QString id);
     bool supprimer(QString id_p);
+    QString poste_conge;
+    int generateId();
+    QString generateConseilMessage();
+    QString generateLeaveDecision();
+    QSqlQueryModel *afficherconge();
+    bool ajouterconge(const QString &id_emp, const QString &nom, const QString &prenom,
+                      const QString &email, const QString &raison, const QString &poste,
+                      const QDate &date_dep, const QDate &date_fin);
+    bool updateCongeStatus(const QString &id_conge, const QString &etat);
+
 
 
 
@@ -36,6 +46,8 @@ public:
     QString getposte(){return poste;};
     QString getmdp(){return mdp;};
     QString getsexe(){return sexe;};
+    bool getemployeemailpassword(const QString &id, const QString &mdp);
+    bool getEmployeeDetailsById(const QString &id_emp, QString &nom, QString &prenom, QString &email, QString &poste);
 
 
 
@@ -50,6 +62,7 @@ public:
     void setposte( QString post){poste=post;}
     void setsexe(QString sex){sexe=sex;}
     void setmdp(QString pass){mdp=pass;}
+    bool ajouterconge();
 
 
 
@@ -59,6 +72,9 @@ public:
     QSqlQueryModel * afficher ();
     //bool supprimer (int id_achat);
    bool modifier(QString nom, QString prenom, QString sexe, QString email, float salaire, QString poste, QDate date_emboche, QString id);
+   QSqlQueryModel* rechercher(QString id);
+   QSqlQueryModel* tri(Qt::SortOrder order, int columnIndex1, int columnIndex2);
+   void telechargerPDF();
 };
 
 #endif // PERSONEL_H
