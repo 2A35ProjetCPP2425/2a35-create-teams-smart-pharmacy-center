@@ -1,16 +1,26 @@
 #include "mainwindow.h"
+<<<<<<< HEAD
+=======
+#include "arduino.h"
+
+
+>>>>>>> 8fb8c24 (Deuxieme commit)
 #include "ui_mainwindow.h"
 #include <QString>
 #include "distribution.h"
 #include <QMessageBox>
 #include <QPdfWriter>
+<<<<<<< HEAD
 #include <QTextDocument>
 #include <QDesktopServices>
+=======
+>>>>>>> 8fb8c24 (Deuxieme commit)
 #include <QPainter>
 #include <QtCharts/QChart>
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
+<<<<<<< HEAD
 #include <QtCharts/QChartView>
 #include <QtCharts/QChart>
 #include <QtCharts/QBarSeries>
@@ -27,6 +37,12 @@
 #include <QVector>
 #include <QGraphicsPolygonItem>
 #include <QtCore/QTimer>
+=======
+#include <QLayout>
+#include <QRegularExpression>
+#include <QTimer>
+#include <QVBoxLayout>
+>>>>>>> 8fb8c24 (Deuxieme commit)
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -37,12 +53,46 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableView->setModel(d.afficher());
     Distributeur d1;
     ui->tableView_6->setModel(d1.afficher1());
+<<<<<<< HEAD
 
 }
 void MainWindow::showEvent(QShowEvent *event)
 {
     QMainWindow::showEvent(event);
     mettreAJourListeAboratoires();     // Appel à la méthode de la classe parente
+=======
+    model = new QStandardItemModel(0, 2, this);  // 0 lignes, 2 colonnes
+    model->setHorizontalHeaderLabels({"Température", "Unités"});
+
+    // Initialisation du QTableView
+    tableView = new QTableView(this);
+    tableView->setModel(model);
+    tableView->setGeometry(10, 50, 400, 250);  // Position et taille du QTableView
+
+    // Initialisation d'Arduino et démarrage de la communication
+    arduino = new Arduino(this);
+    arduino->startCommunication();
+
+    // Connexion du signal de température au slot pour mettre à jour l'interface
+    connect(arduino, &Arduino::temperatureChanged, this, &MainWindow::updateTemperatureDisplay);
+}
+
+void MainWindow::updateTemperatureDisplay(float temperature) {
+    // Ajouter une nouvelle ligne avec la température
+    QList<QStandardItem *> rowItems;
+    rowItems.append(new QStandardItem(QString::number(temperature)));  // Température
+    rowItems.append(new QStandardItem("°C"));  // Unité
+
+    // Ajouter la ligne au modèle
+    model->appendRow(rowItems);
+}
+
+
+void MainWindow::showEvent(QShowEvent *event)
+{
+    QMainWindow::showEvent(event);
+    mettreAJourListeAboratoires();   // Appel à la méthode de la classe parente
+>>>>>>> 8fb8c24 (Deuxieme commit)
 
     // Charge et affiche les données de la table distribution chaque fois que la fenêtre est affichée
     Distribution dist;
@@ -58,6 +108,10 @@ void MainWindow::on_pushButton_ajouter_clicked()
     QString aboratoire_distribution = ui->comboBox_aboratoire->currentText();
     QDate dated_distribution = ui->dateEdit_date->date();
     int medist_distribution = ui->lineEdit_medist->text().toInt();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8fb8c24 (Deuxieme commit)
     if (id_distribution <= 0) {
         QMessageBox::warning(this, "Validation", "L'ID de la distribution doit être un nombre positif !");
         return;
@@ -87,10 +141,19 @@ void MainWindow::on_pushButton_ajouter_clicked()
         QMessageBox::warning(this, "Validation", "Le champ 'Medist' doit être un nombre positif !");
         return;
     }
+<<<<<<< HEAD
     Distribution d(id_distribution, qte_distribution, aboratoire_distribution, dated_distribution, medist_distribution);
     bool test = d.ajouter();
 
     if (test) {
+=======
+    Distribution d(id_distribution, qte_distribution, aboratoire_distribution, dated_distribution, medist_distribution );
+    bool test = d.ajouter();
+
+    if (test) {
+        QSqlQueryModel *model = d.afficher();  // Si vous utilisez QSqlQueryModel
+
+>>>>>>> 8fb8c24 (Deuxieme commit)
         ui->tableView->setModel(d1.afficher());
         QMessageBox::information(nullptr, QObject::tr("Ajouter une distribution"),
                                  QObject::tr("Distribution ajoutée.\n"
@@ -122,8 +185,14 @@ void MainWindow::on_pushButton_modifier_clicked()
     Distribution dist;  // Utiliser la classe Distribution
     int id = ui->lineEdit_id2->text().toInt();
     int qte = ui->lineEdit_qte2->text().toInt();
+<<<<<<< HEAD
     QString aboratoire = ui->comboBox_aboratoire2->currentText();
     QDate dated = ui->dateEdit_4->date();
+=======
+    //QString aboratoire = ui->comboBox_aboratoire2->currentText();
+    QDate dated = ui->dateEdit_4->date();
+    int medist = ui->lineEdit_medist_2->text().toInt();
+>>>>>>> 8fb8c24 (Deuxieme commit)
     if (id <= 0) {
         QMessageBox::warning(this, "Validation", "L'ID doit être un nombre positif !");
         return;
@@ -149,13 +218,21 @@ void MainWindow::on_pushButton_modifier_clicked()
     }
 
     // Vérification de l'existence de l'ID dans la base de données
+<<<<<<< HEAD
    if (!dist.idExiste(id)) {
+=======
+    if (!dist.idExiste(id)) {
+>>>>>>> 8fb8c24 (Deuxieme commit)
         QMessageBox::warning(this, "Validation", "L'ID spécifié n'existe pas dans la base de données !");
         return;
     }
 
     // Modifier l'enregistrement de la distribution
+<<<<<<< HEAD
     bool test = dist.modifier(id, qte);
+=======
+    bool test = dist.modifier(id, qte, dated, medist);
+>>>>>>> 8fb8c24 (Deuxieme commit)
 
     if (test)
     {
@@ -190,6 +267,11 @@ void MainWindow::on_pushButton_rech_clicked()
     // Mettre à jour le tableau avec le modèle retourné
     ui->tableView_4->setModel(model);
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 8fb8c24 (Deuxieme commit)
 void MainWindow::on_pushButton_trier_clicked()
 {
     Distribution D;
@@ -214,6 +296,7 @@ void MainWindow::on_pushButton_trier_clicked()
     ui->tableView_4->setModel(model);
 }
 
+<<<<<<< HEAD
 void MainWindow::on_pushButtonPdf_clicked() {
     // Demander à l'utilisateur de choisir l'emplacement du fichier PDF à enregistrer
     QString filePath = QFileDialog::getSaveFileName(this, tr("Enregistrer sous"), "", tr("Fichiers PDF (*.pdf)"));
@@ -315,10 +398,102 @@ void MainWindow::on_pushButtonStat_clicked() {
     QStandardItemModel* model = dist.statistiquesParMedist();
 
     // Associer le modèle au QTableView
+=======
+void MainWindow::on_pushButtonPdf_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Enregistrer en tant que PDF", "", "Fichiers PDF (*.pdf);;Tous les fichiers ()");
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    QPdfWriter pdfWriter(fileName);
+    pdfWriter.setPageOrientation(QPageLayout::Portrait);
+    pdfWriter.setPageSize(QPageSize(QPageSize::A4));
+    pdfWriter.setResolution(300);
+
+    QPainter painter(&pdfWriter);
+
+    // Remplacez ui->tableView par la vue ou le modèle spécifique à votre application
+    QAbstractItemModel *model = ui->tableView->model();
+    if (!model) {
+        QMessageBox::warning(this, "Erreur", "Aucune donnée à exporter.");
+        return;
+    }
+
+    int x = 20;
+    int y = 200;
+    int rowHeight = 50;
+    int columnWidth = 340; //
+
+    // Dessiner l'en-tête
+    QColor headerColor(100, 149, 237);
+    QColor altRowColor(240, 248, 255);
+    QColor textColor(25, 25, 112);
+    QFont font = painter.font();
+    font.setPointSize(10);
+    painter.setFont(font);
+
+    painter.setBrush(QBrush(headerColor));
+    painter.setPen(QPen(Qt::white));
+
+    for (int column = 0; column < model->columnCount(); ++column) {
+        QRect rect(x + column * columnWidth, y, columnWidth, rowHeight);
+        painter.drawRect(rect);
+        painter.drawText(rect, Qt::AlignCenter, model->headerData(column, Qt::Horizontal).toString());
+    }
+
+    y += rowHeight;
+
+    // Dessiner les lignes de données
+    painter.setPen(QPen(textColor));
+    for (int row = 0; row < model->rowCount(); ++row) {
+        QColor rowColor = (row % 2 == 0) ? Qt::white : altRowColor;
+        painter.setBrush(QBrush(rowColor));
+
+        for (int column = 0; column < model->columnCount(); ++column) {
+            QRect rect(x + column * columnWidth, y + row * rowHeight, columnWidth, rowHeight);
+            painter.drawRect(rect);
+            painter.drawText(rect.adjusted(5, 0, -5, 0), Qt::AlignVCenter | Qt::AlignLeft, model->data(model->index(row, column)).toString());
+        }
+    }
+
+    // Titre
+    painter.setPen(QPen(QColor(0, 51, 102)));
+    QFont titleFont("Arial", 25, QFont::Bold);
+    painter.setFont(titleFont);
+    QString title = "les Distribution";
+    int pageWidth = pdfWriter.width();
+    int textWidth = painter.fontMetrics().horizontalAdvance(title);
+    int centeredX = (pageWidth - textWidth) / 2;
+    painter.drawText(centeredX, 85, title);
+
+    // Ajouter un logo
+    QPixmap logo("C:/Users/eya_d/OneDrive/Bureau/pharma2025/logo.png");
+    if (logo.isNull()) {
+        qDebug() << "Le logo n'a pas pu être chargé. Vérifiez le chemin du fichier.";
+    } else {
+        int logoWidth = 250;  // Ajustez la taille du logo si nécessaire
+        int logoHeight = 300;
+        int logoX = pageWidth - logoWidth - 20;
+        int logoY = 20;
+
+        painter.drawPixmap(logoX, logoY, logoWidth, logoHeight, logo);
+    }
+
+    painter.end();
+
+    QMessageBox::information(this, "Exportation réussie", "Les données ont été exportées avec succès.");
+}
+
+void MainWindow::on_pushButtonStat_clicked() {
+    Distribution distribution;
+    QStandardItemModel* model = distribution.statistiquesParMedist();
+>>>>>>> 8fb8c24 (Deuxieme commit)
     ui->tableView_statistiques->setModel(model);
 
     // Optionnel : Ajuster les colonnes pour qu'elles soient bien visibles
     ui->tableView_statistiques->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+<<<<<<< HEAD
 }
 
 void MainWindow::afficherGraphique() {
@@ -368,6 +543,56 @@ void MainWindow::afficherGraphique() {
 }
 
 
+=======
+    if (!model || model->rowCount() == 0) {
+        qDebug() << "Aucune donnée trouvée pour les statistiques.";
+        return;
+    }
+
+    // Créer une série pour le graphique à secteurs
+    QPieSeries *series = new QPieSeries();
+
+    // Parcourir le modèle pour ajouter les données au graphique
+    for (int row = 0; row < model->rowCount(); ++row) {
+        QString medist = model->data(model->index(row, 0)).toString(); // Récupère l'ID du médicament
+        int totalQte = model->data(model->index(row, 1)).toInt();     // Récupère la quantité totale
+
+        // Ajouter un segment pour chaque médicament
+        QPieSlice *slice = series->append(medist, totalQte);
+
+        // Rendre les étiquettes visibles et ajouter des détails (quantité et pourcentage)
+        slice->setLabelVisible(true);
+        slice->setLabel(QString("%1: %2 (%3%)")
+                            .arg(medist)
+                            .arg(totalQte)
+                            .arg(slice->percentage() * 100, 0, 'f', 1));
+    }
+
+    // Créer le graphique
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("Répartition des quantités par médicament");
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+
+    // Configurer la vue du graphique
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    // Définir une taille fixe pour le graphique
+    chartView->setFixedSize(600, 400); // Ajustez cette taille si nécessaire
+
+    // Ajouter le graphique dans la QGraphicsView
+    ui->graphicsView->setScene(new QGraphicsScene());
+    ui->graphicsView->scene()->addWidget(chartView);
+
+    // Ajuster la vue pour afficher correctement le graphique
+    ui->graphicsView->fitInView(ui->graphicsView->scene()->sceneRect(), Qt::KeepAspectRatio);
+
+    // Rafraîchir la scène
+    ui->graphicsView->scene()->update();
+    ui->graphicsView->show();
+}
+>>>>>>> 8fb8c24 (Deuxieme commit)
 void MainWindow::on_pushButton_ajouterr_clicked()
 {
     int idd = ui->lineEdit_idd->text().toInt();
@@ -387,7 +612,11 @@ void MainWindow::on_pushButton_ajouterr_clicked()
     }
     if (d1.nomExiste(nom)) {
         QMessageBox::warning(this, tr("Erreur"), tr("Le nom du distributeur est déjà utilisé. Veuillez en choisir un autre."));
+<<<<<<< HEAD
         return; // Ne pas ajouter si le nom existe déjà
+=======
+        return;
+>>>>>>> 8fb8c24 (Deuxieme commit)
     }
     bool test = d1.ajouterr();
     // Vérification de l'unicité de l'ID
@@ -472,7 +701,11 @@ void MainWindow::on_pushButton_auto_clicked() {
         // Stocker la distance
         if (!distanceMap.contains(nom)) {
             distanceMap[nom] = distance;
+<<<<<<< HEAD
             distributionCount[nom] = 0; // Initialiser le compteur à zéro
+=======
+            distributionCount[nom] = 0;
+>>>>>>> 8fb8c24 (Deuxieme commit)
         }
     }
 
@@ -521,4 +754,9 @@ void MainWindow::on_pushButton_auto_clicked() {
 MainWindow::~MainWindow()
 {
     delete ui;
+<<<<<<< HEAD
+=======
+    delete model;
+    delete tableView;
+>>>>>>> 8fb8c24 (Deuxieme commit)
 }

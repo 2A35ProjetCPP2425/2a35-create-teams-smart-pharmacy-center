@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 14.0.2, 2024-11-21T00:44:35. -->
+=======
+<!-- Written by QtCreator 14.0.2, 2024-12-04T20:08:41. -->
+>>>>>>> 8fb8c24 (Deuxieme commit)
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -247,8 +251,13 @@
     <value type="bool" key="PE.EnvironmentAspect.PrintOnRun">false</value>
     <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph &quot;dwarf,4096&quot; -F 250</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">pharma20252</value>
+<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/eya_d/OneDrive/Bureau/pharma2025 (2)/pharma2025/pharma2025.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/eya_d/OneDrive/Bureau/pharma2025 (2)/pharma2025/pharma2025.pro</value>
+=======
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/eya_d/OneDrive/Bureau/pharma2025 - Copie/pharma2025.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/eya_d/OneDrive/Bureau/pharma2025 - Copie/pharma2025.pro</value>
+>>>>>>> 8fb8c24 (Deuxieme commit)
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>

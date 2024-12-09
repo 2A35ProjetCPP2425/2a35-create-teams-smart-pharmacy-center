@@ -19,12 +19,21 @@ Distribution::Distribution() {
     medist = 0;
 }
 
+<<<<<<< HEAD
 Distribution::Distribution(int id, int qte, QString aboratoire, QDate dated, int medist) {
+=======
+Distribution::Distribution(int id, int qte, QString aboratoire, QDate dated, int medist  ) {
+>>>>>>> 8fb8c24 (Deuxieme commit)
     this->id = id;
     this->qte = qte;
     this->aboratoire = aboratoire;
     this->dated = dated;
     this->medist = medist;
+<<<<<<< HEAD
+=======
+    //this->temperature = temperature;
+
+>>>>>>> 8fb8c24 (Deuxieme commit)
 }
 
 // Accesseurs
@@ -33,12 +42,20 @@ int Distribution::getQte() const { return qte; }
 QString Distribution::getaboratoire() const { return aboratoire; }
 QDate Distribution::getDated() const { return dated; }
 int Distribution::getMedist() const { return medist; }
+<<<<<<< HEAD
+=======
+//float Distribution::getTemperature() const { return temperature; }
+>>>>>>> 8fb8c24 (Deuxieme commit)
 
 // Ajouter une nouvelle distribution
 
 bool Distribution::ajouter() {
     QSqlQuery query;
+<<<<<<< HEAD
     query.prepare("INSERT INTO DISTRIBUTION (ID, QTE, ABORATOIRE, DATED, MEDIST) "
+=======
+    query.prepare("INSERT INTO DISTRIBUTION (ID, QTE, ABORATOIRE, DATED, MEDIST ) "
+>>>>>>> 8fb8c24 (Deuxieme commit)
                   "VALUES (:ID, :QTE, :ABORATOIRE, :DATED, :MEDIST)");
 
     query.bindValue(":ID", id);
@@ -47,6 +64,10 @@ bool Distribution::ajouter() {
     query.bindValue(":DATED", dated);
     query.bindValue(":MEDIST", medist);
 
+<<<<<<< HEAD
+=======
+    //query.bindValue(":TEMP", temperature);
+>>>>>>> 8fb8c24 (Deuxieme commit)
     return query.exec();
 }
 
@@ -80,19 +101,46 @@ bool Distribution::idExiste(int id) {
 }
 
 // Afficher les distributions
+<<<<<<< HEAD
 QSqlTableModel* Distribution::afficher()
 {
+=======
+QSqlTableModel* Distribution::afficher() {
+>>>>>>> 8fb8c24 (Deuxieme commit)
     // Créer un modèle QSqlTableModel
     QSqlTableModel *model = new QSqlTableModel();
     model->setTable("DISTRIBUTION");  // Spécifier la table
     model->select();  // Sélectionner toutes les lignes
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8fb8c24 (Deuxieme commit)
     // Facultatif : définir les en-têtes de colonne si nécessaire
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("QTE"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("ABORATOIRE"));
     model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATED"));
     model->setHeaderData(4, Qt::Horizontal, QObject::tr("MEDIST"));
+<<<<<<< HEAD
     return model;  // Retourner le modèle avec les données
+=======
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("TEMP"));  // Nouvelle colonne pour la température
+
+    return model;  // Retourner le modèle avec les données, y compris la température
+}
+bool Distribution::modifierTemperature(int id, float temp) {
+    QSqlQuery query;
+    query.prepare("UPDATE DISTRIBUTION SET TEMP = :temp WHERE ID = :id");
+    query.bindValue(":temp", temp);
+    query.bindValue(":id", id);
+
+    if (query.exec()) {
+        return true;
+    } else {
+        qDebug() << "Erreur lors de la mise à jour de la température :" << query.lastError().text();
+        return false;
+    }
+>>>>>>> 8fb8c24 (Deuxieme commit)
 }
 
 bool Distribution::supprimer(int id)
@@ -103,6 +151,7 @@ bool Distribution::supprimer(int id)
     query.bindValue(":id", res);
     return query.exec();
 }
+<<<<<<< HEAD
 
 bool Distribution::modifier(int id, int qte)
 {
@@ -112,6 +161,17 @@ bool Distribution::modifier(int id, int qte)
     query.bindValue(":qte", qte);
    // query.bindValue(":aboratoire", aboratoire);
     query.bindValue(":dated", dated);
+=======
+bool Distribution::modifier(int id, int qte,QDate dated ,int medist)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE distribution SET qte = :qte, dated = :dated, medist = :medist WHERE id = :id");
+    query.bindValue(":id", id);
+    query.bindValue(":qte", qte);
+    // query.bindValue(":aboratoire", aboratoire);
+    query.bindValue(":dated", dated);
+    query.bindValue(":medist", medist);
+>>>>>>> 8fb8c24 (Deuxieme commit)
 
     if (query.exec()) {
         // Si la mise à jour réussit, on recharge les données pour refléter la modification
@@ -121,10 +181,15 @@ bool Distribution::modifier(int id, int qte)
     }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8fb8c24 (Deuxieme commit)
 QSqlQueryModel* Distribution::rech(int id, const QString& aboratoire, int qte)
 {
     QSqlQuery query;
     QSqlQueryModel *model = new QSqlQueryModel();
+<<<<<<< HEAD
     // Construire la requête avec les filtres sur id, aboratoire et qte
     QString queryString = "SELECT * FROM DISTRIBUTION WHERE 1=1"; // Base de la requête
 
@@ -139,6 +204,21 @@ QSqlQueryModel* Distribution::rech(int id, const QString& aboratoire, int qte)
     }
     query.prepare(queryString); // Préparer la requête
     // Lier les valeurs des paramètres si elles sont non nulles
+=======
+    // Construire la requête avec les filtres sur
+    QString queryString = "SELECT * FROM DISTRIBUTION WHERE 1=1";  //env des formation trans des inf a srv
+
+    if (id != 0) {
+        queryString += " AND ID = :ID";
+    }
+    if (!aboratoire.isEmpty()) {
+        queryString += " AND ABORATOIRE = :ABORATOIRE";
+    }
+    if (qte != 0) {
+        queryString += " AND QTE = :QTE";
+    }
+    query.prepare(queryString); // Préparer
+>>>>>>> 8fb8c24 (Deuxieme commit)
     if (id != 0) {
         query.bindValue(":ID", id);
     }
@@ -148,9 +228,15 @@ QSqlQueryModel* Distribution::rech(int id, const QString& aboratoire, int qte)
     if (qte != 0) {
         query.bindValue(":QTE", qte);
     }
+<<<<<<< HEAD
     query.exec(); // Exécuter la requête
     model->setQuery(query); // Appliquer la requête au modèle
     return model; // Retourner le modèle avec les résultats
+=======
+    query.exec();
+    model->setQuery(query);
+    return model;
+>>>>>>> 8fb8c24 (Deuxieme commit)
 }
 QSqlQueryModel* Distribution::trierById() {
     QSqlQueryModel *model = new QSqlQueryModel();
@@ -175,6 +261,7 @@ QSqlQueryModel* Distribution::trierByDate() {
     model->setQuery("SELECT * FROM DISTRIBUTION ORDER BY DATED");
     return model;
 }
+<<<<<<< HEAD
 
 QStandardItemModel* Distribution::statistiquesParMedist() {
     QStandardItemModel* model = new QStandardItemModel();
@@ -183,10 +270,19 @@ QStandardItemModel* Distribution::statistiquesParMedist() {
     QSqlQuery query;
     // Requête pour grouper par 'medist' et trier par quantité totale
     query.prepare("SELECT medist, SUM(qte) AS total_qte FROM distribution GROUP BY medist ORDER BY total_qte DESC");
+=======
+QStandardItemModel* Distribution::statistiquesParMedist() {//lect et modf geree don hierarchique
+    QStandardItemModel* model = new QStandardItemModel();
+    model->setHorizontalHeaderLabels({"ID Médicament", "Quantité Totale"});
+
+    QSqlQuery query;
+    query.prepare("SELECT MEDIST, SUM(QTE) AS TOTAL_QTE FROM DISTRIBUTION GROUP BY MEDIST ORDER BY TOTAL_QTE DESC");
+>>>>>>> 8fb8c24 (Deuxieme commit)
 
     if (query.exec()) {
         int row = 0;
         while (query.next()) {
+<<<<<<< HEAD
             int medist = query.value("medist").toInt();       // Récupère l'ID du médicament
             int totalQte = query.value("total_qte").toInt(); // Récupère la quantité totale
 
@@ -196,7 +292,21 @@ QStandardItemModel* Distribution::statistiquesParMedist() {
         }
     } else {
         qWarning() << "Erreur statistiquesParMedist :" << query.lastError().text();
+=======
+            QString medist = query.value(0).toString();
+            int totalQte = query.value(1).toInt();
+            model->setItem(row, 0, new QStandardItem(medist));
+            model->setItem(row, 1, new QStandardItem(QString::number(totalQte)));
+            ++row;
+        }
+    } else {
+        qDebug() << "Erreur dans statistiquesParMedist:" << query.lastError().text();
+>>>>>>> 8fb8c24 (Deuxieme commit)
     }
 
     return model;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8fb8c24 (Deuxieme commit)
