@@ -1,0 +1,11 @@
+debug/arduino.o
+debug/connection.o
+debug/main.o
+debug/medicament.o
+debug/mainwindow.o
+debug/rendezvous.o
+debug/salle.o
+debug/service.o
+debug/qrc_ressource.o
+debug/moc_arduino.o
+debug/moc_mainwindow.o

@@ -1,0 +1,11 @@
+release/arduino.o
+release/connection.o
+release/main.o
+release/medicament.o
+release/mainwindow.o
+release/rendezvous.o
+release/salle.o
+release/service.o
+release/qrc_ressource.o
+release/moc_arduino.o
+release/moc_mainwindow.o
